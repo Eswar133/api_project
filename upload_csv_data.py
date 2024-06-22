@@ -1,7 +1,7 @@
 import csv
 import requests
 import json
-
+from tqdm import tqdm
 def create_bank(bank_data):
     url = 'http://127.0.0.1:8000/create_bank/'
     headers = {'Content-Type': 'application/json'}
@@ -31,7 +31,7 @@ with open(csv_file, mode='r', newline='') as file:
     # Print the fieldnames (column names) for debugging
     print("CSV Columns:", csv_reader.fieldnames)
     
-    for row in csv_reader:
+    for row in tqdm (csv_reader):
         # Send bank data
         bank_data = {
             'name': row.get('bank_name')  # Adjust the field names based on your CSV columns
