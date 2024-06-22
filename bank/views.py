@@ -88,19 +88,45 @@ def create_branch(request):
 
     return HttpResponseBadRequest("Only POST requests are allowed")
 
+from django.http import JsonResponse, HttpResponseNotFound, HttpResponseBadRequest
+from django.views.decorators.csrf import csrf_exempt
+from .models import Branch
+
 @csrf_exempt
-def get_branch(request, ifsc):
-    try:
-        branch = Branch.objects.get(pk=ifsc)
-        response_data = {
-            'ifsc': branch.ifsc,
-            'bank_id': branch.bank.bank_id,
-            'branch_name': branch.branch_name,
-            'address': branch.address,
-            'city': branch.city,
-            'district': branch.district,
-            'state': branch.state,
-        }
-        return JsonResponse(response_data)
-    except Branch.DoesNotExist:
-        return HttpResponseNotFound("Branch not found")
+def get_branch(request, ifsc=None):
+    if request.method == 'GET':
+        try:
+            if ifsc:
+                branch = Branch.objects.get(pk=ifsc)
+                response_data = {
+                    'ifsc': branch.ifsc,
+                    'bank_id': branch.bank.bank_id,
+                    'branch_name': branch.branch_name,
+                    'address': branch.address,
+                    'city': branch.city,
+                    'district': branch.district,
+                    'state': branch.state,
+                }
+                return JsonResponse(response_data)
+            else:
+                branches = Branch.objects.all()
+                response_data = [
+                    {
+                        'ifsc': branch.ifsc,
+                        'bank_id': branch.bank.bank_id,
+                        'branch_name': branch.branch_name,
+                        'address': branch.address,
+                        'city': branch.city,
+                        'district': branch.district,
+                        'state': branch.state,
+                    }
+                    for branch in branches
+                ]
+                return JsonResponse(response_data, safe=False)
+        except Branch.DoesNotExist:
+            if ifsc:
+                return HttpResponseNotFound("Branch not found")
+            else:
+                return HttpResponseBadRequest("Please provide a valid 'ifsc' parameter or leave it empty to fetch all branches")
+
+    return HttpResponseBadRequest("Only GET requests are allowed")
