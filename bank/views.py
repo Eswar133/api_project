@@ -28,16 +28,30 @@ def create_bank(request):
     return HttpResponseBadRequest("Only POST requests are allowed")
 
 @csrf_exempt
-def get_bank(request, bank_id):
-    try:
-        bank = Bank.objects.get(pk=bank_id)
-        response_data = {
-            'bank_id': bank.bank_id,
-            'name': bank.name,
-        }
-        return JsonResponse(response_data)
-    except Bank.DoesNotExist:
-        return HttpResponseNotFound("Bank not found")
+def get_bank(request, bank_id=None):
+    if request.method == 'GET':
+        if bank_id:
+            try:
+                bank = Bank.objects.get(pk=bank_id)
+                response_data = {
+                    'bank_id': bank.bank_id,
+                    'name': bank.name,
+                }
+                return JsonResponse(response_data)
+            except Bank.DoesNotExist:
+                return HttpResponseNotFound("Bank not found")
+        else:
+            banks = Bank.objects.all()
+            response_data = [
+                {
+                    'bank_id': bank.bank_id,
+                    'name': bank.name,
+                }
+                for bank in banks
+            ]
+            return JsonResponse(response_data, safe=False)
+
+    return HttpResponseBadRequest("Only GET requests are allowed")
 
 @csrf_exempt
 def create_branch(request):

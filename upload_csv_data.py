@@ -1,38 +1,30 @@
 import csv
 import requests
 import json
-import time
 
 def create_bank(bank_data):
     url = 'http://127.0.0.1:8000/create_bank/'
     headers = {'Content-Type': 'application/json'}
-    try:
-        response = requests.post(url, headers=headers, data=json.dumps(bank_data))
-        if response.status_code == 201:
-            print(f"Bank created successfully: {bank_data['name']}")
-            return response.json().get('bank_id')  # Return the bank_id of the created bank
-        else:
-            print(f"Failed to create bank: {response.status_code} - {response.text}")
-            return None
-    except requests.exceptions.RequestException as e:
-        print(f"Error creating bank: {e}")
+    response = requests.post(url, headers=headers, data=json.dumps(bank_data))
+    if response.status_code == 201:
+        print(f"Bank created successfully: {bank_data['name']}")
+        return response.json().get('bank_id')  # Return the bank_id of the created bank
+    else:
+        print(f"Failed to create bank: {response.status_code} - {response.text}")
         return None
 
 def create_branch(branch_data):
     url = 'http://127.0.0.1:8000/create_branch/'
     headers = {'Content-Type': 'application/json'}
-    try:
-        response = requests.post(url, headers=headers, data=json.dumps(branch_data))
-        if response.status_code == 201:
-            print(f"Branch created successfully: {branch_data['branch_name']}")
-        else:
-            print(f"Failed to create branch: {response.status_code} - {response.text}")
-            print("Branch data:", branch_data)
-    except requests.exceptions.RequestException as e:
-        print(f"Error creating branch: {e}")
+    response = requests.post(url, headers=headers, data=json.dumps(branch_data))
+    if response.status_code == 201:
+        print(f"Branch created successfully: {branch_data['branch_name']}")
+    else:
+        print(f"Failed to create branch: {response.status_code} - {response.text}")
+        print("Branch data:", branch_data)
 
 # Read the CSV file and send data to the API
-csv_file = '/mnt/data/bank_branches.csv'  # Update with your CSV file path
+csv_file = 'C:/Users/manik/OneDrive/Desktop/bank_branches.csv'  # Update with your CSV file path
 
 with open(csv_file, mode='r', newline='') as file:
     csv_reader = csv.DictReader(file)
@@ -52,7 +44,7 @@ with open(csv_file, mode='r', newline='') as file:
                 branch_data = {
                     'ifsc': row.get('ifsc'),  # Adjust the field names based on your CSV columns
                     'bank_id': bank_id,  # Ensure this matches the created bank's ID
-                    'branch_name': row.get('branch'),  # Adjusted to match CSV column name
+                    'branch_name': row.get('branch_name'),
                     'address': row.get('address'),
                     'city': row.get('city'),
                     'district': row.get('district'),
@@ -60,15 +52,10 @@ with open(csv_file, mode='r', newline='') as file:
                 }
                 
                 # Check for missing fields
-                missing_fields = [key for key, value in branch_data.items() if not value]
-                if missing_fields:
-                    print(f"Missing fields in branch data: {missing_fields}")
-                    print("Branch data:", branch_data)
+                if not all(branch_data.values()):
+                    print("Missing fields in branch data:", branch_data)
                 else:
                     create_branch(branch_data)
             except KeyError as e:
                 print(f"Missing key in CSV data: {e}")
                 print("Row data:", row)
-                
-        # Sleep to avoid overloading the server
-        time.sleep(1)
