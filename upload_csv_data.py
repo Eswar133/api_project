@@ -57,5 +57,6 @@ with open(csv_file, mode='r', newline='') as file:
                 else:
                     create_branch(branch_data)
             except KeyError as e:
+                
                 print(f"Missing key in CSV data: {e}")
                 print("Row data:", row)

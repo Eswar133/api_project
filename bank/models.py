@@ -1,74 +1,23 @@
-import csv
-import requests
-import json
-import time
+from django.db import models
 
-def create_bank(bank_data):
-    url = 'http://127.0.0.1:8000/create_bank/'
-    headers = {'Content-Type': 'application/json'}
-    try:
-        response = requests.post(url, headers=headers, data=json.dumps(bank_data))
-        if response.status_code == 201:
-            print(f"Bank created successfully: {bank_data['name']}")
-            return response.json().get('bank_id')  # Return the bank_id of the created bank
-        else:
-            print(f"Failed to create bank: {response.status_code} - {response.text}")
-            return None
-    except requests.exceptions.RequestException as e:
-        print(f"Error creating bank: {e}")
-        return None
-
-def create_branch(branch_data):
-    url = 'http://127.0.0.1:8000/create_branch/'
-    headers = {'Content-Type': 'application/json'}
-    try:
-        response = requests.post(url, headers=headers, data=json.dumps(branch_data))
-        if response.status_code == 201:
-            print(f"Branch created successfully: {branch_data['branch_name']}")
-        else:
-            print(f"Failed to create branch: {response.status_code} - {response.text}")
-            print("Branch data:", branch_data)
-    except requests.exceptions.RequestException as e:
-        print(f"Error creating branch: {e}")
-
-# Read the CSV file and send data to the API
-csv_file = '/mnt/data/bank_branches.csv'  # Update with your CSV file path
-
-with open(csv_file, mode='r', newline='') as file:
-    csv_reader = csv.DictReader(file)
-    # Print the fieldnames (column names) for debugging
-    print("CSV Columns:", csv_reader.fieldnames)
+class Bank(models.Model):
+    bank_id = models.BigAutoField(primary_key=True)  
+    name = models.CharField(max_length=49)
     
-    for row in csv_reader:
-        # Send bank data
-        bank_data = {
-            'name': row.get('bank_name')  # Adjust the field names based on your CSV columns
-        }
-        bank_id = create_bank(bank_data)
-        
-        # Send branch data if bank creation was successful
-        if bank_id:
-            try:
-                branch_data = {
-                    'ifsc': row.get('ifsc'),  # Adjust the field names based on your CSV columns
-                    'bank_id': bank_id,  # Ensure this matches the created bank's ID
-                    'branch_name': row.get('branch'),  # Adjusted to match CSV column name
-                    'address': row.get('address'),
-                    'city': row.get('city'),
-                    'district': row.get('district'),
-                    'state': row.get('state')
-                }
-                
-                # Check for missing fields
-                missing_fields = [key for key, value in branch_data.items() if not value]
-                if missing_fields:
-                    print(f"Missing fields in branch data: {missing_fields}")
-                    print("Branch data:", branch_data)
-                else:
-                    create_branch(branch_data)
-            except KeyError as e:
-                print(f"Missing key in CSV data: {e}")
-                print("Row data:", row)
-                
-        # Sleep to avoid overloading the server
-        time.sleep(1)
+
+    def __str__(self):
+        return self.name
+
+class Branch(models.Model):
+    ifsc = models.CharField(max_length=11, primary_key=True)
+    bank = models.ForeignKey(Bank, on_delete=models.CASCADE)
+    branch_name = models.CharField(max_length=74)
+    address = models.CharField(max_length=195)  
+    city = models.CharField(max_length=50)  
+    district = models.CharField(max_length=50) 
+    state = models.CharField(max_length=26)  
+
+    def __str__(self):
+        return self.branch_name 
+
+
