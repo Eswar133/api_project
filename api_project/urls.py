@@ -1,14 +1,27 @@
+"""
+URL configuration for banks project.
+
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/5.0/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
 from django.contrib import admin
 from django.urls import path
 from bank import views
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('create_bank/', views.create_bank, name='create_bank'),
-    path('get_bank/',views.get_bank,name='get_bank'),
-    path('get_bank/<int:bank_id>/', views.get_bank, name='get_bank'),
-    path('create_branch/', views.create_branch, name='create_branch'),
-    path('get_branch/', views.get_branch, name='get_branch'),
-    path('get_branch/<str:ifsc>/', views.get_branch, name='get_branch_ifsc'),
-    
+    path('api/create_bank/', views.create_bank, name='create-bank'),
+    path('api/get_banks/', views.get_banks, name='get-banks'),
+    path('api/create_branch/', views.create_branch, name='create-branch'),
+    path('api/get_branch/', views.get_branch, name='get-branch'),
 ]
+
