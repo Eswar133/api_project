@@ -35,8 +35,8 @@ This project is designed to provide REST API implemention for bank and  branch
     "district": "Sprinfield District",
     "state": "State Name"
 }```
-- Sample output ``` ```
-- Response code :
+- Sample output ``` {'message': 'Branch created successfully',"branch_id": '128370'} ```
+- Response code : "201"
 
 ## Get Branches (/api/get_branch/): Retrieves a paginated list of all branches.
 - Request method : GET
