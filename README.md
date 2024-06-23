@@ -80,3 +80,5 @@ This project is designed to provide REST API implemention for bank and  branch
 - Postman
 ### Database
 - PostgreSQL (v.16)
+# installation
+- Link : [https://github.com/Eswar133/api_project/edit/main/install.md]
