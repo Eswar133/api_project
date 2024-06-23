@@ -80,6 +80,9 @@ This project is designed to provide REST API implemention for bank and  branch
 - Postman
 ### Database
 - PostgreSQL (v.16)
+### Webpages
+- Bank : http://127.0.0.1:8000/banks/ ( To view banks with user interface )
+- Branch : http://127.0.0.1:8000/branches/ ( To view branches with user interface, pagination )
 # Installation
 - Link : https://github.com/Eswar133/api_project/edit/main/install.md
 # Depolyment
