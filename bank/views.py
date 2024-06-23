@@ -14,7 +14,6 @@ def branches_view(request):
     return render(request, 'branches.html')
 @csrf_exempt    
 def create_bank(request):
-    
     try:
         data = json.loads(request.body)
         name = data.get('name')
