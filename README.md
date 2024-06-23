@@ -71,3 +71,12 @@ This project is designed to provide REST API implemention for bank and  branch
 - Sample response : "200"
 
 # TECH STACK
+### Languages and Frameworks
+- Python (v.3)
+- Django (v.16)
+### Libraries and Tools
+- Bootstrap (v.5)
+- Html (v.5)
+- Postman
+### Database
+- PostgreSQL (v.16)
