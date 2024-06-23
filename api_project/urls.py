@@ -23,5 +23,7 @@ urlpatterns = [
     path('api/get_banks/', views.get_banks, name='get-banks'),
     path('api/create_branch/', views.create_branch, name='create-branch'),
     path('api/get_branch/', views.get_branch, name='get-branch'),
+    path('banks/', views.banks_view, name='banks'),
+    path('branches/', views.branches_view, name='branches_view'),
 ]
 

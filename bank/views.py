@@ -3,12 +3,16 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json
-
 from .models import Bank,Branch
+from django.shortcuts import render
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
-@csrf_exempt  
+def banks_view(request):
+    return render(request, 'banks.html')
 
-  
+def branches_view(request):
+    return render(request, 'branches.html')
+@csrf_exempt    
 def create_bank(request):
     
     try:
@@ -28,7 +32,6 @@ def create_bank(request):
         return JsonResponse({'error': str(e)}, status=500)
 
 @csrf_exempt  
-  
 def get_banks(request):
     try:
         banks = Bank.objects.all()
@@ -76,9 +79,24 @@ def create_branch(request):
 @csrf_exempt
 def get_branch(request):
     try:
+        # Get all branches
         branches = Branch.objects.all()
+
+        # Set up pagination
+        page = request.GET.get('page', 1)
+        per_page = request.GET.get('per_page', 10)
+        paginator = Paginator(branches, per_page)
+
+        try:
+            branches_page = paginator.page(page)
+        except PageNotAnInteger:
+            branches_page = paginator.page(1)
+        except EmptyPage:
+            branches_page = paginator.page(paginator.num_pages)
+
+        # Prepare the data
         branches_data = []
-        for branch in branches:
+        for branch in branches_page:
             branch_data = {
                 'ifsc': branch.ifsc,
                 'bank_id': branch.bank.id,
@@ -90,8 +108,18 @@ def get_branch(request):
                 'state': branch.state,
             }
             branches_data.append(branch_data)
-        
-        return JsonResponse(branches_data, safe=False)
+
+        # Construct pagination information
+        response_data = {
+            'total_count': paginator.count,
+            'num_pages': paginator.num_pages,
+            'current_page': branches_page.number,
+            'next': branches_page.next_page_number() if branches_page.has_next() else None,
+            'previous': branches_page.previous_page_number() if branches_page.has_previous() else None,
+            'results': branches_data,
+        }
+
+        return JsonResponse(response_data)
     
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
