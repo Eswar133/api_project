@@ -5,6 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Branches</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 8px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        table {
+            background-color: #ffffff;
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .pagination {
+            justify-content: center;
+        }
+        .page-link {
+            color: #007bff;
+        }
+        .page-link:hover {
+            text-decoration: none;
+            background-color: #e9ecef;
+        }
+        .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            cursor: not-allowed;
+            background-color: #ffffff;
+            border-color: #dee2e6;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
@@ -49,7 +101,7 @@
             const perPage = 10;
 
             function fetchBranches(page) {
-                fetch(`/api/branch/?page=${page}&per_page=${perPage}`)
+                fetch(`/api/branch?page=${page}&per_page=${perPage}`)
                     .then(response => response.json())
                     .then(data => {
                         const tableBody = document.getElementById('branches-table-body');
