@@ -4,7 +4,7 @@ import json
 from tqdm import tqdm
 
 def create_bank(bank_data):
-    url = 'http://127.0.0.1:8000/api/create_bank/'  
+    url = 'http://127.0.0.1:8000/api/banks/'  
     headers = {'Content-Type': 'application/json'}
     try:
         response = requests.post(url, headers=headers, data=json.dumps(bank_data))

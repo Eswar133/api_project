@@ -2,16 +2,16 @@
 This project is designed to provide REST API implemention for bank and  branch  
 
 # API ENDPOINTS
-## Create bank (/api/create_bank/): allows creation of a new bank.
+## Create bank (/api/banks/): allows creation of a new bank.
 - Request method : POST 
-- Sample endpoint : http://127.0.0.1:8000/api/create_bank/
+- Sample endpoint : http://127.0.0.1:8000/api/banks/
 - Sample input ```{ "id":"200", "name":"ANDHRA_BANK } ```
 - sample output ``` { "message": "Bank created successfully", "bank_id": "128369" }```
 - Response code : "201"
 
-## Get Banks (/api/get_banks/): Retrieves a list of all banks.
+## Get Banks (/api/banks/): Retrieves a list of all banks.
 - Request method : GET
-- Sample endpoint : http://127.0.0.1:8000/api/get_banks/
+- Sample endpoint : http://127.0.0.1:8000/api/banks/
 - Sample output ``` {
         "id": 128199,
         "name": "BARCLAYS BANK"
@@ -38,9 +38,9 @@ This project is designed to provide REST API implemention for bank and  branch
 - Sample output ``` {'message': 'Branch created successfully',"branch_id": '128370'} ```
 - Response code : "201"
 
-## Get Branches (/api/get_branch/): Retrieves a paginated list of all branches.
+## Get Branches (/api/branch/): Retrieves a paginated list of all branches.
 - Request method : GET
-- Sample endpoint : http://127.0.0.1:8000/api/get_branch/
+- Sample endpoint : http://127.0.0.1:8000/api/branch/
 - Sample output :```{
     "total_count": 127860,
     "num_pages": 12786,

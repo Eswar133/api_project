@@ -23,7 +23,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            fetch('/api/get_banks/')
+            fetch('/api/banks/')
                 .then(response => response.json())
                 .then(data => {
                     const tableBody = document.getElementById('banks-table-body');

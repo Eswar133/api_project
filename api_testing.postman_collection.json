@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "0f6e438a-7802-4c0d-bdf5-eaa6f3cf33b3",
+		"name": "api_testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29223603"
+	},
+	"item": [
+		{
+			"name": "branches",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/branch/?state=MAHARASHTRA&bank_id=128234",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"branch",
+						""
+					],
+					"query": [
+						{
+							"key": "state",
+							"value": "MAHARASHTRA"
+						},
+						{
+							"key": "bank_id",
+							"value": "128234"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "branches",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ifsc\": \"ABHY0065001\", \r\n\"bank_id\": 128234, \"bank_name\": \"ABHYUDAYA COOPERATIVE BANK LIMITED\", \"branch\": \"RTGS-HO\", \"address\": \"ABHYUDAYA BANK BLDG., B.NO.71, NEHRU NAGAR, KURLA (E), MUMBAI-400024\", \"city\": \"MUMBAI\", \"district\": \"GREATER MUMBAI\", \"state\": \"MAHARASHTRA\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/branch",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"branch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "banks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ifsc\": \"ABHY0065001\", \r\n\"bank_id\": 128234, \"bank_name\": \"ABHYUDAYA COOPERATIVE BANK LIMITED\", \"branch\": \"RTGS-HO\", \"address\": \"ABHYUDAYA BANK BLDG., B.NO.71, NEHRU NAGAR, KURLA (E), MUMBAI-400024\", \"city\": \"MUMBAI\", \"district\": \"GREATER MUMBAI\", \"state\": \"MAHARASHTRA\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/banks",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"banks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "banks Copy",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"STATE  BANK OF INDIA\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/banks",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"banks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

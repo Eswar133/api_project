@@ -19,11 +19,12 @@ from django.urls import path
 from bank import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/create_bank/', views.create_bank, name='create-bank'),
-    path('api/get_banks/', views.get_banks, name='get-banks'),
-    path('api/create_branch/', views.create_branch, name='create-branch'),
-    path('api/get_branch/', views.get_branch, name='get-branch'),
+    path('api/banks', views.BankAPIView.as_view(), name='create-bank'),
+    path('api/banks', views.BankAPIView.as_view(), name='get-banks'),
+    path('api/branch', views.BranchAPIView.as_view(), name='create-branch'),
+    path('api/branch/<str:ifsc>/', views.BranchAPIView.as_view(), name='get-branch'),
     path('banks/', views.banks_view, name='banks'),
     path('branches/', views.branches_view, name='branches_view'),
+    
 ]
 
